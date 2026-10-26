@@ -21,7 +21,8 @@ Proje: Employee Attendance System (React + Vite + json-server). Üç öğrenci b
 
 - Sadece kullanıcının öğrencisine ait dosyalarda çalış. Tablo: `docs/ARCHITECTURE.md` §11.
 - Başka öğrencinin dosyasında değişiklik gerekiyorsa **dokunma**. Changelog'un "Açık sorular" bölümüne yaz ve kullanıcıya söyle.
-- Ortak dosyalar (`App.jsx`, `db.json`, `utils/constants.js`, `index.css`, `package.json`): en küçük değişikliği yap, changelog'da bildir.
+- Ortak dosyalar (`src/routes/AppRoutes.jsx`, `data/db.json`, `src/utils/constants.js`, `src/styles/index.css`, `package.json`): en küçük değişikliği yap, changelog'da bildir.
+- Yeni sayfa eklerken: sayfa `src/pages/<alan>/`, rota `src/routes/AppRoutes.jsx`'te kendi bloğuna, menü satırı `MENU_ITEMS`'a.
 - Başkasının sayfası henüz yoksa sadece bir `<h1>` içeren boş placeholder bileşen oluştur; içini doldurma.
 - Başkasının fonksiyon imzasını (ARCHITECTURE.md §7–§9) değiştirme. Değişiklik şartsa önce ARCHITECTURE.md'yi güncelle, changelog'a yaz, kullanıcıya bildir.
 
@@ -59,7 +60,7 @@ Proje: Employee Attendance System (React + Vite + json-server). Üç öğrenci b
 ## 5. Yapma
 
 - Firebase, Supabase veya herhangi bir uzak veritabanı/servis ekleme.
-- `db.json` içindeki seed admin'i silme veya şifresini değiştirme.
+- `data/db.json` içindeki seed admin'i silme veya şifresini değiştirme.
 - Kullanıcı onayı olmadan büyük refactor, klasör taşıma, bağımlılık yükseltme.
 - Başkasının klasörüne özellik yazma.
 - `node_modules`, `dist`, `.env` commit etme.
@@ -78,7 +79,7 @@ npm run build        # üretim derlemesi
 npm run lint         # oxlint
 ```
 
-Seed hesaplar (db.json): `admin@eas.local / Admin123!`, `ayse@eas.local / Ayse123!`, `mehmet@eas.local / Mehmet123!`
+Seed hesaplar (data/db.json): `admin@eas.local / Admin123!`, `ayse@eas.local / Ayse123!`, `mehmet@eas.local / Mehmet123!`
 
 ---
 

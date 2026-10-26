@@ -19,7 +19,7 @@ export async function login(email, password) {
   return toSafeUser(user);
 }
 
-/** Her zaman employee rolüyle kayıt açar. Admin db.json seed'inden gelir. */
+/** Her zaman employee rolüyle kayıt açar. Admin data/db.json seed'inden gelir. */
 export async function register({ name, email, password, position = '', hourlyRate }) {
   const existing = await userService.getByEmail(email);
   if (existing) {

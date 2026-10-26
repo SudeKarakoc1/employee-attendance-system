@@ -3,8 +3,8 @@
 // Login/Register sayfaları navigate() çağırmaz; tek yönlendirme noktası burasıdır (yarış durumu önlemi).
 // Sahip: Öğrenci 1
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { HOME_BY_ROLE, ROUTES } from '../../utils/constants';
+import { useAuth } from '../context/AuthContext';
+import { HOME_BY_ROLE, ROUTES } from '../utils/constants';
 
 export default function GuestRoute() {
   const { isAuthenticated, user, loading } = useAuth();

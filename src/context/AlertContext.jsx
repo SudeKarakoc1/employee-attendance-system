@@ -1,8 +1,8 @@
 // Proje geneli toast ve onay penceresi. docs/ARCHITECTURE.md §7.2
 // Sahip: Öğrenci 1
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
-import ToastAlert from '../components/common/ToastAlert';
-import Modal from '../components/common/Modal';
+import ToastAlert from '../components/ui/ToastAlert';
+import Modal from '../components/ui/Modal';
 import { ALERT_TYPES, TOAST_DURATION_MS } from '../utils/constants';
 
 const AlertContext = createContext(null);

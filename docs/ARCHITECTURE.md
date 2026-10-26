@@ -3,7 +3,7 @@
 > Bu doküman projenin **tek doğruluk kaynağıdır**. Kod yazmadan önce okunur.
 > Mimariyi etkileyen her karar burada güncellenir ve `docs/changelog/` altına kayıt düşülür.
 
-**Son güncelleme:** 2026-10-26 (Öğrenci 1) – Auth ve Alert katmanı tamamlandı
+**Son güncelleme:** 2026-10-26 (Öğrenci 1) – klasör yapısı toparlandı (routes/, components/layout|ui, styles/, data/)
 
 ---
 
@@ -30,9 +30,9 @@ Proje **basit** tutulacak. Veritabanı **lokalde** çalışacak, bulut servisi k
 | Build       | Vite 8 + React 19 (JavaScript, `.jsx`)  | TypeScript **yok**                                         |
 | Routing     | `react-router-dom` 7.x (declarative)    | `BrowserRouter`, `Routes`, `Route`, `Navigate`, `Outlet`   |
 | HTTP        | `axios` 1.x                             | Tek instance: `src/services/api.js`                        |
-| Veritabanı  | `json-server@0.17.4` (lokal)            | `db.json`, port **3001**, `--watch`                        |
+| Veritabanı  | `json-server@0.17.4` (lokal)            | `data/db.json`, port **3001**, `--watch`                   |
 | State       | React Context + hooks                   | Redux / Zustand **yok**                                    |
-| Stil        | Düz CSS (`index.css` + bileşen başına `.css`) | Karar bekliyor, bkz. §13                             |
+| Stil        | Düz CSS (`styles/index.css` + bileşen başına `.css`) | Karar bekliyor, bkz. §13                      |
 | Dev araçları| `concurrently`, `oxlint` (Vite şablonu) | `npm run dev` hem Vite hem json-server'ı başlatır          |
 | Tarih       | Yerleşik `Date`                         | `utils/` içinde tarih kütüphanesi **yok** (saf JS şartı)   |
 
@@ -49,12 +49,13 @@ employee-attendance-system/
 ├── AGENTS.md                      # AI ajan yönergeleri (Ö1)
 ├── CLAUDE.md                      # Claude Code için AGENTS.md'yi içe aktarır (Ö1)
 ├── README.md                      # Kurulum, roller, ekran görüntüleri (Ö3; kurulum bölümü Ö1 yazar)
-├── db.json                        # json-server veritabanı + seed (Ortak)
 ├── package.json                   # (Ortak)
 ├── index.html                     # Vite giriş HTML'i (Ö1)
 ├── vite.config.js                 # (Ö1)
 ├── .oxlintrc.json                 # Lint kuralları (Ö1)
 ├── .gitignore
+├── data/
+│   └── db.json                    # json-server veritabanı + seed (Ortak)
 ├── docs/
 │   ├── ARCHITECTURE.md            # Bu dosya (Ö1 yönetir, herkes önerir)
 │   └── changelog/                 # Her değişiklik için bir .md (herkes)
@@ -63,20 +64,24 @@ employee-attendance-system/
 │   └── favicon.svg
 └── src/
     ├── main.jsx                   # React giriş noktası (Ö1)
-    ├── App.jsx                    # Router + Context sağlayıcıları (Ö1 sahibi, Ortak rota ekleme)
-    ├── index.css                  # Global stiller, CSS değişkenleri (Ortak)
+    ├── App.jsx                    # Sadece provider'lar + <AppRoutes /> (Ö1)
+    ├── routes/                    # Yönlendirme (Ö1)
+    │   ├── AppRoutes.jsx          # Tüm rotalar tek yerde (Ortak: kendi bloğuna rota satırı eklenir)
+    │   ├── ProtectedRoute.jsx     # Rol tabanlı rota koruması
+    │   └── GuestRoute.jsx         # Girişliyse paneline yönlendirir; login/register için
+    ├── styles/
+    │   └── index.css              # Global stiller, CSS değişkenleri (Ortak)
     ├── assets/                    # Logo, ikon, görsel (Ortak)
     │
     ├── components/
-    │   ├── common/
-    │   │   ├── Layout.jsx         # Navbar + Sidebar + <Outlet/> (Ö1)
-    │   │   ├── Navbar.jsx         # Üst bar: kullanıcı adı, rol, çıkış (Ö1)
-    │   │   ├── Sidebar.jsx        # Role göre menü (Ö1)
-    │   │   ├── ProtectedRoute.jsx # Rol tabanlı rota koruması (Ö1)
-    │   │   ├── GuestRoute.jsx     # Girişliyse paneline yönlendirir; login/register için (Ö1)
-    │   │   ├── ToastAlert.jsx     # Toast/pop-up uyarı bileşeni (+ .css) (Ö1)
-    │   │   ├── Modal.jsx          # Genel modal; confirm() ve formlar için (+ .css) (Ö1)
-    │   │   ├── Layout.css         # Navbar + Sidebar düzeni (Ö1)
+    │   ├── layout/                # Girişli sayfaların çerçevesi (Ö1)
+    │   │   ├── Layout.jsx         # Navbar + Sidebar + <Outlet/>
+    │   │   ├── Navbar.jsx         # Üst bar: kullanıcı adı, rol, çıkış
+    │   │   ├── Sidebar.jsx        # MENU_ITEMS'dan role göre menü
+    │   │   └── Layout.css
+    │   ├── ui/                    # Yeniden kullanılabilir arayüz parçaları
+    │   │   ├── Modal.jsx (+.css)  # Genel modal; confirm() ve formlar için (Ö1)
+    │   │   ├── ToastAlert.jsx (+.css) # Toast/pop-up uyarı (Ö1)
     │   │   └── StatSummaryCard.jsx# Özet kart: toplam saat, mesai vb. (Ö3)
     │   ├── attendance/
     │   │   ├── ClockInOutCard.jsx # Giriş/çıkış butonu + canlı sayaç (Ö2)
@@ -121,7 +126,7 @@ employee-attendance-system/
 
 ---
 
-## 4. Veri Modeli (`db.json`)
+## 4. Veri Modeli (`data/db.json`)
 
 json-server iki koleksiyon sunar. `id` alanı **sayı** olup json-server tarafından otomatik üretilir.
 
@@ -159,7 +164,7 @@ json-server iki koleksiyon sunar. `id` alanı **sayı** olup json-server tarafı
 
 ### 4.4 Seed verisi
 
-`db.json` ilk halinde şunları içerir. **Seed admin silinmez, şifresi değiştirilmez.**
+`data/db.json` ilk halinde şunları içerir. **Seed admin silinmez, şifresi değiştirilmez.**
 
 ```json
 {
@@ -282,7 +287,7 @@ Buton sınıfları: `.btn`, `.btn--ghost`, `.btn--danger`, `:disabled`. Form sı
 `allowedRoles` verilmezse sadece giriş kontrolü yapar. `loading` iken hiçbir şey render etmez (yanlış yönlendirmeyi önler).
 
 `GuestRoute` tersidir: `/login` ve `/register` için. Girişli kullanıcıyı önce `location.state.from` (ProtectedRoute'un bıraktığı hedef), yoksa `HOME_BY_ROLE[role]`'a yönlendirir. **Login ve Register sayfaları `navigate()` çağırmaz**; tek yönlendirme noktası GuestRoute'tur. Aksi halde iki yönlendirme yarışır ve `state.from` kaybolur (E2E testinde yakalandı).
-`/` rotası `App.jsx` içindeki `HomeRedirect` ile role göre yönlenir.
+`/` rotası `routes/AppRoutes.jsx` içindeki `HomeRedirect` ile role göre yönlenir. `App.jsx` yalnızca provider'ları ve `BrowserRouter`'ı kurar; **yeni rota `routes/AppRoutes.jsx`'e eklenir**.
 
 ### 7.4 `Layout`
 
@@ -435,11 +440,11 @@ export const CURRENCY = 'TRY';
 
 | Öğrenci | Alan                                      | Rubrik           | Sahip olduğu dosyalar                                                                 |
 |---------|-------------------------------------------|------------------|---------------------------------------------------------------------------------------|
-| Ö1      | Mimari, Auth, Global sistemler            | Madde 3, 4, 6    | Proje iskeleti, `context/*`, `components/common/*` (StatSummaryCard hariç), `pages/auth/*`, `Unauthorized`, `NotFound`, `services/api.js`, `authService.js`, `userService.js` (temel), `utils/constants.js`, `utils/validators.js`, `App.jsx`, `main.jsx`, `AGENTS.md`, `docs/ARCHITECTURE.md` |
+| Ö1      | Mimari, Auth, Global sistemler            | Madde 3, 4, 6    | Proje iskeleti, `context/*`, `routes/*`, `components/layout/*`, `components/ui/*` (StatSummaryCard hariç), `pages/auth/*`, `Unauthorized`, `NotFound`, `services/api.js`, `authService.js`, `userService.js` (temel), `utils/constants.js`, `utils/validators.js`, `utils/dateUtils.js`, `App.jsx`, `main.jsx`, `styles/index.css`, `AGENTS.md`, `docs/ARCHITECTURE.md` |
 | Ö2      | Çalışan portalı, devamlılık motoru        | Madde 2, 5, 7    | `components/attendance/*`, `pages/employee/*`, `services/attendanceService.js`, `utils/timeCalculations.js`, `validators.js` tarih fonksiyonları |
-| Ö3      | Admin paneli, bordro, raporlama           | Madde 5, 8, 9    | `components/admin/*`, `components/common/StatSummaryCard.jsx`, `pages/admin/*`, `utils/salaryEngine.js`, `userService.js` genişletme, `README.md`, CSV/print |
+| Ö3      | Admin paneli, bordro, raporlama           | Madde 5, 8, 9    | `components/admin/*`, `components/ui/StatSummaryCard.jsx`, `pages/admin/*`, `utils/salaryEngine.js`, `userService.js` genişletme, `README.md`, CSV/print |
 
-**Ortak dosyalar** (küçük, bildirimli değişiklik): `App.jsx` (rota ekleme), `db.json` (seed), `utils/constants.js`, `index.css`, `package.json`.
+**Ortak dosyalar** (küçük, bildirimli değişiklik): `routes/AppRoutes.jsx` (rota ekleme), `data/db.json` (seed), `utils/constants.js`, `styles/index.css`, `package.json`.
 
 Ortak dosya kuralı: en küçük değişiklik yapılır, changelog'un "Diğer öğrencileri etkileyen değişiklikler" bölümüne yazılır.
 

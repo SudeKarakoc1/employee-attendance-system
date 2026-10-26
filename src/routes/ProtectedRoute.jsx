@@ -1,10 +1,10 @@
-// Rol tabanlı rota koruması. docs/ARCHITECTURE.md §7.3
+// Rol tabanlı rota koruması. docs/ARCHITECTURE.md §7.3. Kullanımı: routes/AppRoutes.jsx
 // Kullanım: <Route element={<ProtectedRoute allowedRoles={['admin']} />}> ... </Route>
 // allowedRoles verilmezse sadece giriş kontrolü yapar.
 // Sahip: Öğrenci 1
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { ROUTES } from '../../utils/constants';
+import { useAuth } from '../context/AuthContext';
+import { ROUTES } from '../utils/constants';
 
 export default function ProtectedRoute({ allowedRoles }) {
   const { isAuthenticated, user, loading } = useAuth();

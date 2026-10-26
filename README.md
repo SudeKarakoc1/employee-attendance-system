@@ -32,7 +32,7 @@ Diğer komutlar: `npm run client`, `npm run server`, `npm run build`, `npm run l
 | employee | ayse@eas.local     | Ayse123!    |
 | employee | mehmet@eas.local   | Mehmet123!  |
 
-Veritabanı `db.json` dosyasıdır. Şifreler ders projesi olduğu için düz metin tutulur.
+Veritabanı `data/db.json` dosyasıdır. Şifreler ders projesi olduğu için düz metin tutulur.
 
 ## Roller
 <!-- TODO (Ö3) -->

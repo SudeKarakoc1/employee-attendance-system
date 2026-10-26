@@ -147,3 +147,16 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Vite / editör (proje ekledi)
+dist-ssr
+*.local
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

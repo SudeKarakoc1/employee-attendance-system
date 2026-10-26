@@ -1,0 +1,30 @@
+{
+  "name": "employee-attendance-system",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Çalışan giriş-çıkış kaydı, çalışma süresi hesaplama ve devam raporları (Advanced Web Design with React, Proje-8)",
+  "scripts": {
+    "dev": "concurrently -n client,server -c blue,green \"npm:client\" \"npm:server\"",
+    "client": "vite",
+    "server": "json-server --watch db.json --port 3001",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^10.0.6",
+    "json-server": "^0.17.4",
+    "oxlint": "^1.88.0",
+    "vite": "^8.3.4"
+  }
+}
